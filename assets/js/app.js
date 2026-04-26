@@ -75,16 +75,28 @@ const PACKAGES = [
 
 const MAINTENANCE = [
   {
-    id: "monthly",
-    name: "Monthly Care Plan",
-    price: "K250/month",
-    desc: "All updates, changes, and additions covered monthly"
+    id: "basic",
+    name: "Basic Care",
+    price: "K200/month",
+    desc: "For Starter (1 page) sites — minor text and image updates"
+  },
+  {
+    id: "growth",
+    name: "Growth Care",
+    price: "K450/month",
+    desc: "For Business and Store sites — unlimited small changes and additions"
+  },
+  {
+    id: "premium",
+    name: "Premium Care",
+    price: "K800+/month",
+    desc: "For Premium sites — priority support, advanced changes, new features"
   },
   {
     id: "ondemand",
-    name: "On-Demand Plan",
+    name: "On-Demand",
     price: "K100/update",
-    desc: "Pay only when you need a change or addition made"
+    desc: "No monthly fee — pay only when you need a change made"
   },
   {
     id: "none",
