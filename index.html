@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Contract — Hangoma Lucky Web Dev</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">
+    <img src="assets/images/logo.png" alt="Logo">
+    <span class="nav-logo-text">Hangoma Lucky <span>Web Dev</span></span>
+  </a>
+  <span class="nav-badge">Contract System</span>
+</nav>
+
+<div class="container-sm" style="padding-top:2.5rem;">
+
+  <!-- HEADER -->
+  <div style="text-align:center; margin-bottom:2.5rem;">
+    <div style="font-size:2.5rem; margin-bottom:0.75rem;">📋</div>
+    <h1 style="font-size:1.8rem; margin-bottom:0.5rem;">New Client Contract</h1>
+    <p style="color:var(--white-70); font-size:0.95rem;">Fill in the project details below to generate a professional contract.</p>
+  </div>
+
+  <!-- FORM -->
+  <form id="contractForm" onsubmit="handleSubmit(event)">
+
+    <!-- CLIENT DETAILS -->
+    <div class="card">
+      <div class="card-title">👤 Client Details</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Client Full Name *</label>
+          <input type="text" id="clientName" placeholder="e.g. John Mwale" required>
+        </div>
+        <div class="form-group">
+          <label>Business / Company Name *</label>
+          <input type="text" id="clientBusiness" placeholder="e.g. Mwale Holdings" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Client Phone Number *</label>
+          <input type="tel" id="clientPhone" placeholder="e.g. 0974 000 000" required>
+        </div>
+        <div class="form-group">
+          <label>Client Email (Optional)</label>
+          <input type="email" id="clientEmail" placeholder="client@example.com">
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT DETAILS -->
+    <div class="card">
+      <div class="card-title">🌐 Project Details</div>
+      <div class="form-group">
+        <label>Project Description *</label>
+        <textarea id="projectDesc" placeholder="Briefly describe what you are building for this client — e.g. A 5-page website for a jewellery business in Ndola including a product gallery and contact form." required></textarea>
+      </div>
+    </div>
+
+    <!-- PACKAGE SELECTION -->
+    <div class="card">
+      <div class="card-title">📦 Select Package *</div>
+      <div class="package-grid" id="packageGrid"></div>
+      <input type="hidden" id="selectedPackage" required>
+      <div id="packageError" style="color:var(--error); font-size:0.82rem; margin-top:0.5rem; display:none;">
+        Please select a package to continue.
+      </div>
+    </div>
+
+    <!-- MAINTENANCE -->
+    <div class="card">
+      <div class="card-title">🔧 Maintenance Plan *</div>
+      <div class="maintenance-grid" id="maintenanceGrid"></div>
+      <input type="hidden" id="selectedMaintenance" required>
+      <div id="maintenanceError" style="color:var(--error); font-size:0.82rem; margin-top:0.5rem; display:none;">
+        Please select a maintenance plan to continue.
+      </div>
+    </div>
+
+    <!-- DEVELOPER SIGNATURE -->
+    <div class="card">
+      <div class="card-title">✍️ Your Signature</div>
+      <div class="alert alert-info">
+        <span>ℹ️</span>
+        <span>Type your full name below as your digital signature. This confirms you agree to deliver the project as described.</span>
+      </div>
+      <div class="sig-box">
+        <label>Type your full name to sign</label>
+        <input type="text" id="devSig" placeholder="Lucky Hangoma"
+          style="font-family:Georgia,serif; font-style:italic; font-size:1.3rem; color:var(--orange); background:transparent; border:none; border-bottom:1px solid rgba(249,115,22,0.4); border-radius:0; padding:0.5rem 0;"
+          required>
+      </div>
+      <p style="font-size:0.78rem; color:var(--white-40); margin-top:0.5rem;">
+        By typing your name you confirm that all details above are correct and you agree to the contract terms.
+      </p>
+    </div>
+
+    <!-- SUBMIT -->
+    <button type="submit" class="btn btn-primary btn-full btn-lg" style="margin-bottom:2rem;">
+      Generate Contract →
+    </button>
+
+  </form>
+</div>
+
+<div class="footer">
+  Hangoma Lucky Web Dev · Contract System · hangomalucky1@gmail.com
+</div>
+
+<script src="assets/js/app.js"></script>
+<script>
+  // ── BUILD PACKAGE OPTIONS ──
+  const packageGrid = document.getElementById('packageGrid');
+  PACKAGES.forEach(pkg => {
+    const div = document.createElement('div');
+    div.className = 'package-option';
+    div.dataset.id = pkg.id;
+    div.innerHTML = `
+      <div class="package-check">✓</div>
+      <div class="package-name">${pkg.name}</div>
+      <div class="package-price">${fmt(pkg.price)}</div>
+      <div class="package-desc">${pkg.pages} — ${pkg.desc}</div>
+    `;
+    div.addEventListener('click', () => {
+      document.querySelectorAll('.package-option').forEach(el => el.classList.remove('selected'));
+      div.classList.add('selected');
+      document.getElementById('selectedPackage').value = pkg.id;
+      document.getElementById('packageError').style.display = 'none';
+    });
+    packageGrid.appendChild(div);
+  });
+
+  // ── BUILD MAINTENANCE OPTIONS ──
+  const mainGrid = document.getElementById('maintenanceGrid');
+  MAINTENANCE.forEach(m => {
+    const div = document.createElement('div');
+    div.className = 'package-option';
+    div.dataset.id = m.id;
+    div.innerHTML = `
+      <div class="package-check">✓</div>
+      <div class="package-name">${m.name}</div>
+      <div class="package-price" style="font-size:1rem;">${m.price}</div>
+      <div class="package-desc">${m.desc}</div>
+    `;
+    div.addEventListener('click', () => {
+      document.querySelectorAll('#maintenanceGrid .package-option').forEach(el => el.classList.remove('selected'));
+      div.classList.add('selected');
+      document.getElementById('selectedMaintenance').value = m.id;
+      document.getElementById('maintenanceError').style.display = 'none';
+    });
+    mainGrid.appendChild(div);
+  });
+
+  // ── SUBMIT ──
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const pkg = document.getElementById('selectedPackage').value;
+    const mnt = document.getElementById('selectedMaintenance').value;
+
+    if (!pkg) {
+      document.getElementById('packageError').style.display = 'block';
+      return;
+    }
+    if (!mnt) {
+      document.getElementById('maintenanceError').style.display = 'block';
+      return;
+    }
+
+    const data = {
+      ref:             contractRef(),
+      date:            today(),
+      clientName:      document.getElementById('clientName').value.trim(),
+      clientBusiness:  document.getElementById('clientBusiness').value.trim(),
+      clientPhone:     document.getElementById('clientPhone').value.trim(),
+      clientEmail:     document.getElementById('clientEmail').value.trim(),
+      projectDesc:     document.getElementById('projectDesc').value.trim(),
+      package:         pkg,
+      maintenance:     mnt,
+      devSignature:    document.getElementById('devSig').value.trim(),
+      clientSignature: ''
+    };
+
+    saveContract(data);
+    window.location.href = 'sign.html';
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contract Signed — Hangoma Lucky Web Dev</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">
+    <img src="assets/images/logo.png" alt="Logo">
+    <span class="nav-logo-text">Hangoma Lucky <span>Web Dev</span></span>
+  </a>
+  <span class="nav-badge">Contract Signed</span>
+</nav>
+
+<div class="container-sm" style="padding-top:3rem; text-align:center;">
+
+  <div class="success-icon">✅</div>
+
+  <h1 style="font-size:2rem; margin-bottom:0.75rem;">Contract Signed!</h1>
+  <p style="color:var(--white-70); font-size:1rem; max-width:420px; margin:0 auto 2.5rem;">
+    The contract has been signed and the PDF has been downloaded. Both parties now have a copy for their records.
+  </p>
+
+  <!-- SUMMARY -->
+  <div class="card" style="text-align:left;" id="summaryCard">
+    <div class="card-title">📋 Contract Summary</div>
+    <div id="summaryContent" style="color:var(--white-70); font-size:0.9rem; line-height:2;"></div>
+  </div>
+
+  <!-- NEXT STEPS -->
+  <div class="card" style="text-align:left;">
+    <div class="card-title">🎯 Reminder — Next Steps</div>
+    <div style="display:grid; gap:0.75rem; font-size:0.9rem; color:var(--white-70);">
+      <div>📱 <strong style="color:var(--white);">Remind the client</strong> to send the 50% deposit to Airtel Money <strong style="color:var(--orange);">0976532605</strong></div>
+      <div>📤 <strong style="color:var(--white);">Send them your copy</strong> of the PDF via WhatsApp so they have it</div>
+      <div>📅 <strong style="color:var(--white);">Start work</strong> as soon as deposit is confirmed</div>
+      <div>📸 <strong style="color:var(--white);">Send daily updates</strong> — Day 1 through Day 5</div>
+      <div>💰 <strong style="color:var(--white);">Collect remaining balance</strong> before final handover</div>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:3rem;">
+    <a href="index.html" class="btn btn-primary btn-lg" style="flex:1;">
+      + New Contract
+    </a>
+    <a href="sign.html" class="btn btn-outline" style="flex-shrink:0;">
+      Re-download PDF
+    </a>
+  </div>
+
+</div>
+
+<div class="footer">
+  Hangoma Lucky Web Dev · Contract System · hangomalucky1@gmail.com
+</div>
+
+<script src="assets/js/app.js"></script>
+<script>
+  window.addEventListener('load', () => {
+    const data = loadContract();
+    if (!data) { window.location.href = 'index.html'; return; }
+
+    const pkg = PACKAGES.find(p => p.id === data.package);
+    const mnt = MAINTENANCE.find(m => m.id === data.maintenance);
+
+    document.getElementById('summaryContent').innerHTML = `
+      <div><strong style="color:var(--white);">Contract Ref:</strong> ${data.ref}</div>
+      <div><strong style="color:var(--white);">Date:</strong> ${data.date}</div>
+      <div><strong style="color:var(--white);">Client:</strong> ${data.clientName} — ${data.clientBusiness}</div>
+      <div><strong style="color:var(--white);">Package:</strong> ${pkg.name} — ${fmt(pkg.price)}</div>
+      <div><strong style="color:var(--white);">Deposit Due:</strong> <span style="color:var(--orange);">${fmt(pkg.deposit)}</span></div>
+      <div><strong style="color:var(--white);">Maintenance:</strong> ${mnt.name} — ${mnt.price}</div>
+      <div><strong style="color:var(--white);">Client Signed:</strong> <span style="font-style:italic; color:var(--orange);">${data.clientSignature}</span></div>
+      <div><strong style="color:var(--white);">Developer Signed:</strong> <span style="font-style:italic; color:var(--orange);">${data.devSignature}</span></div>
+    `;
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Contract — Hangoma Lucky Web Dev</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">
+    <img src="assets/images/logo.png" alt="Logo">
+    <span class="nav-logo-text">Hangoma Lucky <span>Web Dev</span></span>
+  </a>
+  <span class="nav-badge">Sign Contract</span>
+</nav>
+
+<div class="container" style="padding-top:2rem;">
+
+  <!-- STEPS -->
+  <div class="steps">
+    <div class="step done">1. Project Setup</div>
+    <div class="step active">2. Review & Sign</div>
+    <div class="step">3. Download PDF</div>
+  </div>
+
+  <!-- CONTRACT DISPLAY -->
+  <div class="card">
+    <div class="card-title">📄 Web Development Services Agreement</div>
+    <div class="alert alert-warning" style="margin-bottom:1.25rem;">
+      <span>⚠️</span>
+      <span>Please read the full contract carefully before signing. Scroll down to read all terms.</span>
+    </div>
+    <div class="contract-body" id="contractBody">
+      Loading contract...
+    </div>
+  </div>
+
+  <!-- CLIENT SIGNATURE -->
+  <div class="card">
+    <div class="card-title">✍️ Client Signature</div>
+    <div class="alert alert-info" style="margin-bottom:1.25rem;">
+      <span>ℹ️</span>
+      <span>Type your full legal name below to sign. By signing you confirm you have read and agreed to all terms above.</span>
+    </div>
+    <div class="sig-box">
+      <label>Client — Type full name to sign *</label>
+      <input type="text" id="clientSigInput"
+        placeholder="Type your full name here..."
+        style="width:100%; font-family:Georgia,serif; font-style:italic; font-size:1.4rem; color:var(--orange); background:transparent; border:none; border-bottom:1px solid rgba(249,115,22,0.4); border-radius:0; padding:0.5rem 0; outline:none;"
+        oninput="updateClientSig(this.value)">
+      <div id="clientSigPreview" class="sig-name" style="margin-top:0.5rem; font-size:1.4rem; min-height:36px; border-top:1px dashed rgba(249,115,22,0.2); padding-top:0.5rem;"></div>
+    </div>
+    <p style="font-size:0.78rem; color:var(--white-40); margin-bottom:1.5rem;">
+      Typed name serves as a legally binding digital signature under Zambian contract law.
+    </p>
+
+    <div class="alert alert-warning" id="sigWarning" style="display:none;">
+      <span>⚠️</span>
+      <span>Please type your full name to sign the contract before downloading.</span>
+    </div>
+
+    <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+      <button onclick="downloadPDF()" class="btn btn-success btn-lg" style="flex:1;">
+        ⬇️ Download Signed Contract (PDF)
+      </button>
+      <a href="index.html" class="btn btn-outline" style="flex-shrink:0;">
+        ← Edit Details
+      </a>
+    </div>
+  </div>
+
+  <!-- WHAT HAPPENS NEXT -->
+  <div class="card">
+    <div class="card-title">🚀 What Happens Next</div>
+    <div style="display:grid; gap:1rem;">
+      <div style="display:flex; gap:0.75rem; align-items:flex-start;">
+        <div style="width:32px; height:32px; background:var(--orange-glow); border:1px solid rgba(249,115,22,0.3); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700; color:var(--orange); flex-shrink:0;">1</div>
+        <div>
+          <div style="font-weight:600; margin-bottom:0.2rem;">Download & Save Your Copy</div>
+          <div style="font-size:0.85rem; color:var(--white-70);">Click the button above to download your signed PDF. Keep it for your records.</div>
+        </div>
+      </div>
+      <div style="display:flex; gap:0.75rem; align-items:flex-start;">
+        <div style="width:32px; height:32px; background:var(--orange-glow); border:1px solid rgba(249,115,22,0.3); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700; color:var(--orange); flex-shrink:0;">2</div>
+        <div>
+          <div style="font-weight:600; margin-bottom:0.2rem;">Send the 50% Deposit</div>
+          <div style="font-size:0.85rem; color:var(--white-70);">Transfer the deposit via Airtel Money to <strong>0976532605</strong> (Lucky Hangoma). Work begins immediately after confirmation.</div>
+        </div>
+      </div>
+      <div style="display:flex; gap:0.75rem; align-items:flex-start;">
+        <div style="width:32px; height:32px; background:var(--orange-glow); border:1px solid rgba(249,115,22,0.3); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700; color:var(--orange); flex-shrink:0;">3</div>
+        <div>
+          <div style="font-weight:600; margin-bottom:0.2rem;">Receive Daily Progress Updates</div>
+          <div style="font-size:0.85rem; color:var(--white-70);">You'll receive progress updates every day. Provide feedback within 24 hours to stay on schedule.</div>
+        </div>
+      </div>
+      <div style="display:flex; gap:0.75rem; align-items:flex-start;">
+        <div style="width:32px; height:32px; background:var(--orange-glow); border:1px solid rgba(249,115,22,0.3); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700; color:var(--orange); flex-shrink:0;">4</div>
+        <div>
+          <div style="font-weight:600; margin-bottom:0.2rem;">Website Goes Live in 5 Days</div>
+          <div style="font-size:0.85rem; color:var(--white-70);">Final payment is due before handover. Your website goes live and you receive full ownership.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Hangoma Lucky Web Dev · Contract System · hangomalucky1@gmail.com
+</div>
+
+<!-- HIDDEN PDF CONTENT -->
+<div id="pdfContent" style="position:fixed; left:-9999px; top:0; width:800px; background:white; padding:40px; font-family:Arial,sans-serif; font-size:12px; color:#1a1a1a; line-height:1.7;"></div>
+
+<script src="assets/js/app.js"></script>
+<script>
+  let contractData = null;
+
+  // ── LOAD CONTRACT ──
+  window.addEventListener('load', () => {
+    contractData = loadContract();
+    if (!contractData) {
+      window.location.href = 'index.html';
+      return;
+    }
+    document.getElementById('contractBody').innerHTML = generateContractHTML(contractData);
+  });
+
+  // ── UPDATE CLIENT SIGNATURE ──
+  function updateClientSig(val) {
+    document.getElementById('clientSigPreview').textContent = val;
+    contractData.clientSignature = val;
+    saveContract(contractData);
+  }
+
+  // ── DOWNLOAD PDF ──
+  async function downloadPDF() {
+    const clientSig = document.getElementById('clientSigInput').value.trim();
+    if (!clientSig) {
+      document.getElementById('sigWarning').style.display = 'flex';
+      document.getElementById('clientSigInput').focus();
+      return;
+    }
+    document.getElementById('sigWarning').style.display = 'none';
+
+    contractData.clientSignature = clientSig;
+    saveContract(contractData);
+
+    // Show loading
+    const btn = document.querySelector('.btn-success');
+    const original = btn.innerHTML;
+    btn.innerHTML = '⏳ Generating PDF...';
+    btn.disabled = true;
+
+    // Populate PDF content div
+    const pdfDiv = document.getElementById('pdfContent');
+    pdfDiv.innerHTML = generateContractHTML(contractData);
+
+    try {
+      await new Promise(r => setTimeout(r, 300));
+      const canvas = await html2canvas(pdfDiv, {
+        scale: 1.5,
+        useCORS: true,
+        backgroundColor: '#ffffff',
+        logging: false
+      });
+
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pageW = pdf.internal.pageSize.getWidth();
+      const pageH = pdf.internal.pageSize.getHeight();
+      const imgW = pageW;
+      const imgH = (canvas.height * pageW) / canvas.width;
+
+      let posY = 0;
+      let remainH = imgH;
+
+      while (remainH > 0) {
+        pdf.addImage(
+          canvas.toDataURL('image/jpeg', 0.92),
+          'JPEG', 0, posY, imgW, imgH
+        );
+        remainH -= pageH;
+        posY -= pageH;
+        if (remainH > 0) pdf.addPage();
+      }
+
+      const filename = `Contract-${contractData.ref}-${contractData.clientName.replace(/\s+/g,'_')}.pdf`;
+      pdf.save(filename);
+
+      btn.innerHTML = '✅ PDF Downloaded!';
+      btn.style.background = 'var(--success)';
+
+      setTimeout(() => {
+        btn.innerHTML = original;
+        btn.disabled = false;
+        btn.style.background = '';
+        window.location.href = 'success.html';
+      }, 1800);
+
+    } catch(err) {
+      console.error(err);
+      btn.innerHTML = '❌ Error — Try Again';
+      btn.disabled = false;
+      setTimeout(() => { btn.innerHTML = original; }, 2000);
+    }
+  }
+</script>
+</body>
+</html>
